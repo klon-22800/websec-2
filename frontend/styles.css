@@ -18,3 +18,23 @@ body {
 .leaflet-attribution-flag {
     display: none;
 }
+
+#daily-cards {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 90px;
+    text-align: center;
+}
+
+.card img {
+    width: 40px;
+    height: 40px;
+}

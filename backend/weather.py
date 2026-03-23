@@ -8,7 +8,7 @@ def get_weather(lat: float, lon: float):
     url = (
         "https://api.open-meteo.com/v1/forecast"
         f"?latitude={lat}&longitude={lon}"
-        "&daily=temperature_2m_max,precipitation_sum,windspeed_10m_max"
+        "&daily=temperature_2m_max,precipitation_sum,windspeed_10m_max,weathercode"
         "&timezone=auto"
     )
 
@@ -21,5 +21,6 @@ def get_weather(lat: float, lon: float):
         "dates": daily.get("time", []),
         "temperature": daily.get("temperature_2m_max", []),
         "precipitation": daily.get("precipitation_sum", []),
-        "wind": daily.get("windspeed_10m_max", [])
+        "wind": daily.get("windspeed_10m_max", []),
+        "weathercode": daily.get("weathercode", [])
     }

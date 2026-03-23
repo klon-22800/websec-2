@@ -1,27 +1,25 @@
 from fastapi import APIRouter
-from datetime import datetime, timedelta
-import random
+import requests
 
 router = APIRouter()
 
 @router.get("/weather")
 def get_weather(lat: float, lon: float):
-    days = 5
+    url = (
+        "https://api.open-meteo.com/v1/forecast"
+        f"?latitude={lat}&longitude={lon}"
+        "&daily=temperature_2m_max,precipitation_sum,windspeed_10m_max"
+        "&timezone=auto"
+    )
 
-    dates = []
-    temp = []
-    precipitation = []
-    wind = []
+    res = requests.get(url)
+    data = res.json()
 
-    for i in range(days):
-        dates.append((datetime.now() + timedelta(days=i)).strftime("%Y-%m-%d"))
-        temp.append(random.randint(-5, 15))
-        precipitation.append(random.randint(0, 10))
-        wind.append(random.randint(1, 10))
+    daily = data.get("daily", {})
 
     return {
-        "dates": dates,
-        "temperature": temp,
-        "precipitation": precipitation,
-        "wind": wind
+        "dates": daily.get("time", []),
+        "temperature": daily.get("temperature_2m_max", []),
+        "precipitation": daily.get("precipitation_sum", []),
+        "wind": daily.get("windspeed_10m_max", [])
     }

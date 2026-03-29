@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Map</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -16,11 +17,18 @@
 
     <h1>Карта погоды</h1>
 
+    <div id="search-container">
+        <input type="text" id="search" placeholder="Поиск города..."/>
+        <div id="suggestions"></div>
+    </div>
+
     <div id="map"></div>
 
     <h2 id="city-title"></h2>
 
-    <div id="daily-cards"></div>
+    <div id="daily-cards-container">
+        <div id="daily-cards"></div>
+    </div>
 
     <div id="chart-container">
         <canvas id="weatherChart"></canvas>

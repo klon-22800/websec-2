@@ -3,24 +3,24 @@ import requests
 
 router = APIRouter()
 
-@router.get("/weather")
-def get_weather(lat: float, lon: float):
+
+@router.get("/weather_hourly")
+def get_weather_hourly(lat: float, lon: float):
     url = (
         "https://api.open-meteo.com/v1/forecast"
         f"?latitude={lat}&longitude={lon}"
-        "&daily=temperature_2m_max,precipitation_sum,windspeed_10m_max,weathercode"
+        "&hourly=temperature_2m,precipitation,windspeed_10m,weathercode"
         "&timezone=auto"
     )
 
     res = requests.get(url)
     data = res.json()
-
-    daily = data.get("daily", {})
+    hourly = data.get("hourly", {})
 
     return {
-        "dates": daily.get("time", []),
-        "temperature": daily.get("temperature_2m_max", []),
-        "precipitation": daily.get("precipitation_sum", []),
-        "wind": daily.get("windspeed_10m_max", []),
-        "weathercode": daily.get("weathercode", [])
+        "time": hourly.get("time", []),
+        "temperature": hourly.get("temperature_2m", []),
+        "precipitation": hourly.get("precipitation", []),
+        "wind": hourly.get("windspeed_10m", []),
+        "weathercode": hourly.get("weathercode", [])
     }
